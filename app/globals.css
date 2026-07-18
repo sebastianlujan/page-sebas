@@ -1,40 +1,47 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+  --bg: #000000;
+  --fg: #ededed;
+  --fg-strong: #ffffff;
+  --muted: #8f8f8f;
+  --muted-dim: #666666;
+  --line: #1f1f1f;
 
-html {
-  height: 100%;
-}
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --container: 640px;
 }
 
 * {
   box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body {
   padding: 0;
   margin: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  letter-spacing: -0.006em;
+}
+
+::selection {
+  background: #ffffff;
+  color: #000000;
 }
 
 a {
@@ -42,8 +49,444 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+/* Layout ------------------------------------------------------------------ */
+
+/* Three.js particle field — fixed behind all content. */
+.fluid-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  /* Keep the densest part of the shape from washing out the text. */
+  opacity: 0.6;
+}
+
+.page {
+  position: relative;
+  z-index: 1;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 24px 24px 160px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  margin-bottom: 8px;
+}
+
+.brand {
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: -0.02em;
+  color: var(--fg-strong);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.nav a {
+  transition: color 0.15s ease;
+}
+
+.nav a:hover {
+  color: var(--fg-strong);
+}
+
+/* Homepage ---------------------------------------------------------------- */
+
+.home {
+  margin-top: 12px;
+}
+
+.tagline {
+  color: var(--fg);
+  font-size: 16px;
+  line-height: 1.65;
+  margin: 0 0 48px;
+  max-width: 36em;
+}
+
+.section {
+  margin-bottom: 44px;
+}
+
+.section-title {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted-dim);
+  margin: 0 0 14px;
+}
+
+/* Experience index */
+
+.entries {
+  display: flex;
+  flex-direction: column;
+}
+
+.entry {
+  display: grid;
+  grid-template-columns: 78px 1fr auto;
+  align-items: baseline;
+  column-gap: 14px;
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
+}
+
+.entry:last-child {
+  border-bottom: 1px solid var(--line);
+}
+
+.entry-period {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--muted-dim);
+  white-space: nowrap;
+  transition: color 0.18s ease;
+}
+
+.entry-role {
+  color: var(--fg);
+  transition: color 0.18s ease, transform 0.18s ease;
+}
+
+.entry-at {
+  color: var(--muted);
+}
+
+.entry-tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted-dim);
+  text-align: right;
+  white-space: nowrap;
+  transition: color 0.15s ease;
+}
+
+.entry:hover .entry-role {
+  color: var(--fg-strong);
+  transform: translateX(3px);
+}
+
+.entry:hover .entry-period {
+  color: var(--muted);
+}
+
+.entry:hover .entry-tag {
+  color: var(--muted);
+}
+
+/* Awards */
+
+.awards {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.award {
+  display: grid;
+  grid-template-columns: 78px 1fr;
+  column-gap: 14px;
+  align-items: baseline;
+}
+
+.award-year {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--muted-dim);
+}
+
+.award-body {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.award-title {
+  color: var(--fg);
+}
+
+.award-event {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--muted-dim);
+}
+
+/* Skills */
+
+.skills {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.skill-row {
+  display: grid;
+  grid-template-columns: 168px 1fr;
+  column-gap: 14px;
+  align-items: baseline;
+}
+
+.skill-label {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--muted);
+}
+
+.skill-items {
+  color: var(--fg);
+  font-size: 14px;
+}
+
+/* Article ----------------------------------------------------------------- */
+
+.back {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--muted-dim);
+  margin-bottom: 26px;
+  transition: color 0.18s ease, transform 0.18s ease;
+}
+
+.back:hover {
+  color: var(--fg-strong);
+  transform: translateX(-3px);
+}
+
+.article h1.post-title {
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  color: var(--fg-strong);
+  margin: 0 0 6px;
+}
+
+.byline {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--muted-dim);
+  margin-bottom: 30px;
+}
+
+/* Prose ------------------------------------------------------------------- */
+
+.prose {
+  color: var(--fg);
+}
+
+.prose p {
+  margin: 0 0 20px;
+}
+
+.prose h1,
+.prose h2,
+.prose h3 {
+  font-weight: 700;
+  color: var(--fg-strong);
+  letter-spacing: -0.02em;
+  margin: 36px 0 12px;
+}
+
+.prose h2 {
+  font-size: 19px;
+}
+
+.prose h3 {
+  font-size: 16px;
+}
+
+.prose a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: var(--muted-dim);
+  transition: text-decoration-color 0.15s ease;
+}
+
+.prose a:hover {
+  text-decoration-color: var(--fg-strong);
+}
+
+.prose ul,
+.prose ol {
+  margin: 0 0 20px;
+  padding: 0;
+  list-style: none;
+}
+
+.prose ol {
+  counter-reset: item;
+}
+
+.prose li {
+  position: relative;
+  padding-left: 22px;
+  margin: 8px 0;
+}
+
+.prose ul > li::before {
+  content: "–";
+  position: absolute;
+  left: 0;
+  color: var(--muted-dim);
+}
+
+.prose ol > li {
+  counter-increment: item;
+}
+
+.prose ol > li::before {
+  content: counter(item) ".";
+  position: absolute;
+  left: 0;
+  color: var(--muted-dim);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  top: 2px;
+}
+
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: #141414;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+
+.prose strong {
+  color: var(--fg-strong);
+  font-weight: 600;
+}
+
+.prose em {
+  font-style: italic;
+}
+
+/* About ------------------------------------------------------------------- */
+
+.about h1 {
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  color: var(--fg-strong);
+  margin: 8px 0 24px;
+}
+
+.about h2 {
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: -0.02em;
+  color: var(--fg-strong);
+  margin: 40px 0 14px;
+}
+
+.about-intro {
+  display: flex;
+  gap: 28px;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.about-intro .bio {
+  flex: 1;
+  min-width: 0;
+}
+
+.avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: #111;
+  border: 1px solid var(--line);
+  display: grid;
+  place-items: center;
+  color: var(--muted-dim);
+  font-family: var(--font-mono);
+  font-size: 22px;
+  letter-spacing: 0.05em;
+}
+
+.muted {
+  color: var(--muted-dim);
+}
+
+.contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+@media (max-width: 560px) {
+  .about-intro {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+  }
+
+  .entry {
+    grid-template-columns: 66px 1fr;
+  }
+
+  .entry-tag {
+    display: none;
+  }
+
+  .award {
+    grid-template-columns: 54px 1fr;
+  }
+
+  .skill-row {
+    grid-template-columns: 1fr;
+    row-gap: 3px;
+  }
+}
+
+/* Motion ------------------------------------------------------------------ */
+/* All entrance animation lives inside this query, so anyone with
+   "reduce motion" enabled sees content immediately, fully visible. */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes reveal-up {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes route-fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* Staggered entrance — delay comes from an inline `--d` custom property. */
+  .reveal {
+    opacity: 0;
+    animation: reveal-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: var(--d, 0ms);
+  }
+
+  /* Replays on every client-side navigation (app/template.tsx remounts). */
+  .route-enter {
+    animation: route-fade 0.3s ease both;
   }
 }
